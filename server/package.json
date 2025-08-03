@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-server",
   "version": "1.0.0",
-  "description": "E-commerce Backend",
+  "description": "Agri Store Backend",
   "main": "index.js",
    "type": "module",
   "scripts": {

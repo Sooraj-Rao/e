@@ -18,8 +18,8 @@ const PRODUCT_CATEGORIES = [
   "Automotive",
   "Health & Wellness",
   "Food & Beverages",
+  "Agriculture"
 ]
-
 const AdminProducts = () => {
   const { user } = useAuth()
   const navigate = useNavigate()

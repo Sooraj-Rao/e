@@ -100,14 +100,7 @@ const AdminLogin = () => {
               </button>
             </form>
 
-            <div className="admin-info">
-              <p>
-                <strong>Default Admin Credentials:</strong>
-              </p>
-              <p>Email: admin@ecommerce.com</p>
-              <p>Password: admin123</p>
-              <small>You can change these in the server .env file</small>
-            </div>
+           
           </div>
         </div>
       </div>

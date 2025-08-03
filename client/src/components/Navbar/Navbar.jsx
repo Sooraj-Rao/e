@@ -21,7 +21,7 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar-content">
           <Link to={isAdmin ? "/admin" : "/"} className="navbar-brand">
-            E-Commerce Store
+            Agri Store
           </Link>
 
           <div className="navbar-links">
