@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts/AdminProducts";
 import AdminOrders from "./pages/Admin/AdminOrders/AdminOrders";
 import AdminUsers from "./pages/Admin/AdminUsers/AdminUsers";
+import OTPForm from "./pages/User/OTP-verify/otp";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/otp" element={<OTPForm />} />
               <Route path="/register" element={<Register />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />

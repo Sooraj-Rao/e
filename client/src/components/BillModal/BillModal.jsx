@@ -26,9 +26,9 @@ const BillModal = ({ order, onClose }) => {
             <div className="company-info">
               <h3>Agri Store</h3>
               <p>123 Business Street</p>
-              <p>City, State 12345</p>
-              <p>Phone: (555) 123-4567</p>
-              <p>Email: info@ecommerce.com</p>
+              <p>Puttur </p>
+              <p>Phone: 122 123-4567</p>
+              <p>Email: info@agri.com</p>
             </div>
 
             <div className="invoice-details">

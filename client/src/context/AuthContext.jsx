@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      // Try admin endpoint first
       try {
         const response = await axios.get("/api/admin/me");
         setUser(response.data.user);
@@ -72,17 +71,28 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
+      if (response.status===200) return { success: true };
+      return { success: false };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Registration failed",
+      };
+    }
+  };
+
+  const verifyOtp = async (otp) => {
+    try {
+      const response = await axios.post("/api/auth/otp", { otp });
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setUser(user);
-
-      return { success: true };
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Registration failed",
+        message: error.response?.data?.message || "OTP failed",
       };
     }
   };
@@ -95,9 +105,10 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    setUser, 
+    setUser,
     login,
     register,
+    verifyOtp,
     logout,
     loading,
   };

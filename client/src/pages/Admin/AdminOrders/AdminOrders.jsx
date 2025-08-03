@@ -134,6 +134,7 @@ const AdminOrders = () => {
                 <th>Items</th>
                 <th>Total Amount</th>
                 <th>Status</th>
+                <th>Payment</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -219,6 +220,8 @@ const AdminOrders = () => {
                       </select>
                     )}
                   </td>
+                  {/* <td>{order.paymentMode == "Cash on delivery" ?order.paymentMode:}</td> */}
+                  <td>{order.paymentMode}</td>
                   <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                   <td>
                     <div className="action-buttons">

@@ -83,16 +83,21 @@ const ProductDetail = () => {
 
             <p style={{ textWrap: "wrap" }}>{product.description}</p>
 
-            <div className="product-stock">
-              <span
-                className={`stock-status ${
-                  product.stock > 0 ? "in-stock" : "out-of-stock"
-                }`}
+            <div className="product-stocsk">
+              <p
+                style={{
+                  width:'fit-content',
+                  fontSize:'.9rem',
+                  padding:'2px 1rem',
+                  borderRadius:'5rem',
+                  background: product.stock > 0 ? "#d4edda" : "#f8d7da",
+                  color: product.stock > 0 ? "#155724" : "#721c24",
+                }}
               >
                 {product.stock > 0
                   ? `${product.stock} in stock`
                   : "Out of stock"}
-              </span>
+              </p>
             </div>
 
             {product.stock > 0 && (
@@ -119,10 +124,7 @@ const ProductDetail = () => {
                 </div>
 
                 <div className="action-buttons">
-                  <button
-                    onClick={handleAddToCart}
-                    className="add-to-cart-btn"
-                  >
+                  <button onClick={handleAddToCart} className="add-to-cart-btn">
                     Add to Cart
                   </button>
                   <button onClick={handleBuyNow} className="btn btn-success">

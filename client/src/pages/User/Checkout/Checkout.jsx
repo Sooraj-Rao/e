@@ -1,41 +1,44 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { useCart } from "../../../context/CartContext"
-import { useAuth } from "../../../context/AuthContext"
-import OrderSuccess from "../../../components/OrderSuccess/OrderSuccess"
-import "./Checkout.css"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useCart } from "../../../context/CartContext";
+import { useAuth } from "../../../context/AuthContext";
+import OrderSuccess from "../../../components/OrderSuccess/OrderSuccess";
+import "./Checkout.css";
+import gpay from "../../../../public/gpay.jpg";
 
 const Checkout = () => {
-  const { cartItems, getCartTotal, clearCart } = useCart()
-  const { user } = useAuth()
-  const navigate = useNavigate()
+  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [paymentMode, setPaymentMode] = useState("Cash on Delivery");
+  const [upiRef, setupiRef] = useState("");
 
   const [customerDetails, setCustomerDetails] = useState({
     name: user?.name || "",
     email: user?.email || "",
     phone: "",
     address: "",
-  })
+  });
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [orderSuccess, setOrderSuccess] = useState(false)
-  const [orderId, setOrderId] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [orderId, setOrderId] = useState(null);
 
   const handleInputChange = (e) => {
     setCustomerDetails({
       ...customerDetails,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       const orderData = {
@@ -44,27 +47,28 @@ const Checkout = () => {
           quantity: item.quantity,
         })),
         customerDetails,
-      }
+        paymentMode: paymentMode == "UPI" ? upiRef : paymentMode,
+      };
 
-      const response = await axios.post("/api/orders", orderData)
+      const response = await axios.post("/api/orders", orderData);
 
-      clearCart()
-      setOrderId(response.data._id)
-      setOrderSuccess(true)
+      clearCart();
+      setOrderId(response.data._id);
+      setOrderSuccess(true);
     } catch (error) {
-      setError(error.response?.data?.message || "Failed to place order")
+      setError(error.response?.data?.message || "Failed to place order");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (cartItems.length === 0 && !orderSuccess) {
-    navigate("/cart")
-    return null
+    navigate("/cart");
+    return null;
   }
 
   if (orderSuccess) {
-    return <OrderSuccess orderId={orderId} />
+    return <OrderSuccess orderId={orderId} />;
   }
 
   return (
@@ -127,7 +131,53 @@ const Checkout = () => {
                 />
               </div>
 
-              <button type="submit" className="btn place-order-btn" disabled={loading}>
+              <div className="form-group">
+                <label htmlFor="paymentMode">Mode of Payment *</label>
+                <select
+                  id="paymentMode"
+                  name="paymentMode"
+                  value={paymentMode}
+                  onChange={(e) => setPaymentMode(e.target.value)}
+                  required
+                >
+                  <option value="Cash on Delivery">Cash on Delivery</option>
+                  <option value="UPI">UPI</option>
+                </select>
+              </div>
+
+              {paymentMode === "UPI" && (
+                <div className="upi-section">
+                  <img
+                    style={{ height: "300px" }}
+                    src={gpay}
+                    alt="Scan to Pay"
+                    className="upi-scanner"
+                  />
+                  <p className="upi-note">
+                    Please scan and complete your UPI payment. Successful
+                    payments will be verified within a few hours.
+                  </p>
+                </div>
+              )}
+
+              {paymentMode === "UPI" && (
+                <div className="form-group">
+                  <label htmlFor="upiref">UPI Reference *</label>
+                  <input
+                    type="text"
+                    id="upi"
+                    name="upi"
+                    value={upiRef}
+                    onChange={(e) => setupiRef(e.target.value)}
+                    required
+                  />
+                </div>
+              )}
+              <button
+                type="submit"
+                className="btn place-order-btn"
+                disabled={loading}
+              >
                 {loading ? "Placing Order..." : "Place Order"}
               </button>
             </form>
@@ -143,14 +193,16 @@ const Checkout = () => {
                     src={`/uploads/${item.image}`}
                     alt={item.title}
                     onError={(e) => {
-                      e.target.src = "/placeholder.svg?height=60&width=60"
+                      e.target.src = "/placeholder.svg?height=60&width=60";
                     }}
                   />
                   <div className="item-info">
                     <h4>{item.title}</h4>
                     <p>Qty: {item.quantity}</p>
                   </div>
-                  <div className="item-price">₹{(item.price * item.quantity).toFixed(2)}</div>
+                  <div className="item-price">
+                    ₹{(item.price * item.quantity).toFixed(2)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -173,7 +225,7 @@ const Checkout = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
@@ -28,6 +28,13 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    paymentMode: {
+      type: String,
+    },
+    paymentStatus: {
+      type: String,
+      default: "pending",
+    },
     customerDetails: {
       name: String,
       email: String,
@@ -52,7 +59,7 @@ const orderSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
-)
+  }
+);
 
-export default mongoose.model("Order", orderSchema)
+export default mongoose.model("Order", orderSchema);

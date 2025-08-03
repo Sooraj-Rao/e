@@ -1,0 +1,39 @@
+.otp-container {
+  max-width: 300px;
+  margin: 4rem auto;
+  font-family: Arial, sans-serif;
+}
+
+.otp-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.otp-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.otp-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.otp-form button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.otp-message {
+  margin-top: 10px;
+  text-align: center;
+}
